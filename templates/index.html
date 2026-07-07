@@ -223,6 +223,8 @@
         }
 
         .data-table {
+            --bs-table-bg: transparent !important;
+            background-color: transparent !important;
             border-radius: 10px;
             overflow: hidden;
             margin-bottom: 0;
@@ -234,8 +236,8 @@
             font-weight: 600;
             border: none;
             position: relative;
-            background: #0f172a;
-            background-image: linear-gradient(135deg, #0a0c16 0%, #151a30 100%);
+            background: #0f172a !important;
+            background-image: linear-gradient(135deg, #0a0c16 0%, #151a30 100%) !important;
             position: sticky;
             top: 0;
             z-index: 10;
@@ -258,11 +260,11 @@
         .data-table tbody tr {
             transition: all 0.15s ease;
             border-bottom: 1px solid rgba(99, 102, 241, 0.06);
-            background: rgba(15, 23, 42, 0.15);
+            background-color: rgba(15, 23, 42, 0.25) !important;
         }
 
         .data-table tbody tr:hover {
-            background: rgba(99, 102, 241, 0.08);
+            background-color: rgba(99, 102, 241, 0.12) !important;
             transform: scale(1.002);
         }
 
@@ -272,6 +274,7 @@
             border: none;
             font-size: 0.85rem;
             color: #cbd5e1;
+            background-color: transparent !important;
         }
 
         .site-name {
