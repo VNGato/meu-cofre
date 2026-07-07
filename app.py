@@ -20,7 +20,7 @@ else:
     with open(KEY_FILE, 'rb') as f:
         key = f.read()
 
-cipher = Fernet(key)
+cipher = Fernet(key.strip())
 
 def check_password_strength(password):
     """Verifica a força da senha e retorna a pontuação"""
