@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Acesso - Meu Cofre de Acessos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --warning-gradient: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            --dark-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            margin: 1rem auto;
+            max-width: 800px;
+        }
+
+        .header-section {
+            background: var(--warning-gradient);
+            color: white;
+            padding: 1.25rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .header-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-section {
+            padding: 1.25rem;
+            background: white;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            z-index: 10;
+        }
+
+        .password-toggle:hover {
+            color: #667eea;
+        }
+
+        .strength-indicator {
+            height: 4px;
+            border-radius: 2px;
+            margin-top: 5px;
+            overflow: hidden;
+            background-color: #e9ecef;
+        }
+
+        .strength-bar {
+            height: 100%;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .strength-weak { background-color: #dc3545; width: 33%; }
+        .strength-medium { background-color: #ffc107; width: 66%; }
+        .strength-strong { background-color: #28a745; width: 100%; }
+
+        .strength-text {
+            font-size: 0.8rem;
+            margin-top: 3px;
+            font-weight: 500;
+        }
+
+        .generate-btn {
+            background: var(--success-gradient);
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(132, 250, 176, 0.4);
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(132, 250, 176, 0.6);
+        }
+
+        .update-btn {
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 10px;
+            padding: 0.6rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .update-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .update-btn:hover::before {
+            left: 100%;
+        }
+
+        .update-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .cancel-btn {
+            background: var(--danger-gradient);
+            border: none;
+            border-radius: 10px;
+            padding: 0.6rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(250, 112, 154, 0.4);
+        }
+
+        .cancel-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(250, 112, 154, 0.6);
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--hover-shadow);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.3rem;
+            font-size: 0.85rem;
+        }
+
+        .input-group-text {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #e9ecef;
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+            color: #6c757d;
+        }
+
+        .form-control:not(:last-child) {
+            border-left: none;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .alert {
+            border-radius: 10px;
+            border: none;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .alert-danger {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        .alert-warning {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            color: #856404;
+            border-left: 4px solid #ffc107;
+        }
+
+        .current-password {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #495057;
+            border-left: 4px solid #6c757d;
+        }
+
+        .password-preview {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .preview-label {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+
+        .preview-value {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #2c3e50;
+            word-break: break-all;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .button-group .btn {
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 1rem;
+                border-radius: 15px;
+            }
+
+            .header-title {
+                font-size: 1.8rem;
+            }
+
+            .form-section {
+                padding: 1.5rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container main-container fade-in">
+        <div class="header-section">
+            <h1 class="header-title">✏️ Editar Acesso</h1>
+            <p class="header-subtitle">Atualize as informações do seu acesso seguro</p>
+        </div>
+
+        <div class="form-section">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'success' if category == 'success' else 'danger' if category == 'danger' else 'warning' }}">
+                            <i class="bi bi-{{ 'check-circle' if category == 'success' else 'exclamation-triangle' if category == 'warning' else 'x-circle' }} me-2"></i>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="/update/{{ item[0] }}" method="POST" id="editForm">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-globe me-2"></i>Site / Aplicativo</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                            <input type="text" name="site" class="form-control" value="{{ item[1] }}" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label"><i class="bi bi-person me-2"></i>Usuário / E-mail</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                            <input type="text" name="username" class="form-control" value="{{ item[2] }}" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <label class="form-label"><i class="bi bi-lock me-2"></i>Senha</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-key"></i></span>
+                            <input type="password" name="password" id="passwordInput" class="form-control" value="{{ item[3] }}" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword()">
+                                <i class="bi bi-eye" id="toggleIcon"></i>
+                            </button>
+                        </div>
+                        <div class="strength-indicator">
+                            <div id="strengthBar" class="strength-bar"></div>
+                        </div>
+                        <div id="strengthText" class="strength-text"></div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label d-block"><i class="bi bi-lightning me-2"></i>Ações</label>
+                        <button type="button" class="generate-btn w-100" onclick="generatePassword()">
+                            <i class="bi bi-shuffle me-2"></i>Gerar Senha
+                        </button>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label"><i class="bi bi-link me-2"></i>URL (opcional)</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-box-arrow-up-right"></i></span>
+                            <input type="text" name="url" class="form-control" value="{{ item[4] if item[4] else '' }}">
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label"><i class="bi bi-journal-text me-2"></i>Notas (opcional)</label>
+                        <textarea name="notes" class="form-control" rows="3">{{ item[5] if item[5] else '' }}</textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="password-preview">
+                            <div class="preview-label">Senha Atual (criptografada):</div>
+                            <div class="preview-value">{{ item[3] }}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="button-group">
+                            <button type="submit" class="update-btn">
+                                <i class="bi bi-check-circle me-2"></i>Atualizar Acesso
+                            </button>
+                            <a href="/" class="btn cancel-btn">
+                                <i class="bi bi-x-circle me-2"></i>Cancelar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const toggleIcon = document.getElementById('toggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.className = 'bi bi-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.className = 'bi bi-eye';
+            }
+        }
+
+        // Generate strong password
+        function generatePassword() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
+            let password = '';
+            for (let i = 0; i < 16; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('passwordInput').value = password;
+            checkPasswordStrength(password);
+        }
+
+        // Check password strength
+        function checkPasswordStrength(password) {
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+            
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            
+            if (password === '') {
+                strengthBar.className = 'strength-bar';
+                strengthText.textContent = '';
+                return;
+            }
+            
+            if (strength <= 2) {
+                strengthBar.className = 'strength-bar strength-weak';
+                strengthText.textContent = 'Fraca';
+                strengthText.style.color = '#dc3545';
+            } else if (strength <= 4) {
+                strengthBar.className = 'strength-bar strength-medium';
+                strengthText.textContent = 'Média';
+                strengthText.style.color = '#ffc107';
+            } else {
+                strengthBar.className = 'strength-bar strength-strong';
+                strengthText.textContent = 'Forte';
+                strengthText.style.color = '#28a745';
+            }
+        }
+
+        // Auto-check password strength
+        document.getElementById('passwordInput').addEventListener('input', function() {
+            checkPasswordStrength(this.value);
+        });
+
+        // Form validation and feedback
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            const password = document.getElementById('passwordInput').value;
+            checkPasswordStrength(password);
+            
+            if (password.length > 0 && document.getElementById('strengthBar').classList.contains('strength-weak')) {
+                e.preventDefault();
+                alert('A senha é muito fraca. Por favor, use uma senha mais forte ou clique em "Gerar Senha".');
+            }
+        });
+
+        // Add shimmer effect to password fields
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInputs = document.querySelectorAll('#passwordInput');
+            passwordInputs.forEach(input => {
+                input.classList.add('shimmer');
+                setTimeout(() => input.classList.remove('shimmer'), 2000);
+            });
+        });
+    </script>
+</body>
+</html>
