@@ -3,6 +3,7 @@ import re
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from cryptography.fernet import Fernet
 import os
+from functools import wraps
 import secrets
 from datetime import timedelta
 
@@ -21,6 +22,26 @@ else:
         key = f.read()
 
 cipher = Fernet(key.strip())
+
+# --- CONTROLE DE ACESSO (PIN) ---
+PIN_FILE = 'pin.txt'
+
+def get_security_pin():
+    if os.path.exists(PIN_FILE):
+        with open(PIN_FILE, 'r') as f:
+            return f.read().strip()
+    # Se o arquivo não existir, cria com o PIN padrão '1234'
+    with open(PIN_FILE, 'w') as f:
+        f.write('1234')
+    return '1234'
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get('logged_in'):
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 def check_password_strength(password):
     """Verifica a força da senha e retorna a pontuação"""
@@ -129,7 +150,33 @@ def init_db():
     conn.commit()
     conn.close()
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if session.get('logged_in'):
+        return redirect(url_for('index'))
+        
+    if request.method == 'POST':
+        pin_input = request.form.get('pin', '').strip()
+        correct_pin = get_security_pin()
+        
+        if pin_input == correct_pin:
+            session['logged_in'] = True
+            session.permanent = True
+            app.permanent_session_lifetime = timedelta(minutes=30)
+            return redirect(url_for('index'))
+        else:
+            flash('❌ PIN de segurança incorreto!', 'danger')
+            
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    flash('ℹ️ Sessão encerrada com sucesso.', 'success')
+    return redirect(url_for('login'))
+
 @app.route('/')
+@login_required
 def index():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
@@ -149,6 +196,7 @@ def index():
     return render_template('index.html', data=decrypted_data)
 
 @app.route('/add', methods=['POST'])
+@login_required
 def add():
     # Validar entrada
     errors = validate_input(request.form)
@@ -194,6 +242,7 @@ def add():
     return redirect(url_for('index'))
 
 @app.route('/edit/<int:id>', methods=['GET'])
+@login_required
 def edit(id):
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
@@ -216,6 +265,7 @@ def edit(id):
         return redirect(url_for('index'))
 
 @app.route('/update/<int:id>', methods=['POST'])
+@login_required
 def update(id):
     # Validar entrada
     errors = validate_input(request.form)
@@ -261,6 +311,7 @@ def update(id):
     return redirect(url_for('index'))
 
 @app.route('/delete/<int:id>')
+@login_required
 def delete(id):
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()

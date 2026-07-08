@@ -3,3 +3,4 @@ database.db
 *.log
 __pycache__/
 .venv/
+pin.txt
