@@ -445,17 +445,7 @@
             checkPasswordStrength(this.value);
         });
 
-        // Form validation
-        document.getElementById('editForm').addEventListener('submit', function(e) {
-            const password = document.getElementById('passwordInput').value;
-            checkPasswordStrength(password);
-            
-            const strengthBar = document.getElementById('strengthBar');
-            if (password.length > 0 && strengthBar.classList.contains('strength-weak')) {
-                e.preventDefault();
-                alert('A senha é muito fraca. Por favor, use uma senha mais forte ou clique em "Gerar Senha".');
-            }
-        });
+
 
         // Initialize strength check on load
         document.addEventListener('DOMContentLoaded', function() {
