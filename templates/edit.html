@@ -18,14 +18,23 @@
             --card-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
         }
 
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             background: var(--bg-gradient);
             font-family: 'Outfit', sans-serif;
             color: #f8fafc;
-            height: 100vh;
+            min-height: 100dvh;
             margin: 0;
-            padding: 0;
-            overflow: hidden;
+            padding: 1rem 0.75rem;
+            overflow-y: auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -39,7 +48,7 @@
             box-shadow: var(--card-shadow);
             overflow: hidden;
             max-width: 750px;
-            width: 95%;
+            width: 100%;
             display: flex;
             flex-direction: column;
             animation: fadeIn 0.4s ease;
@@ -48,13 +57,13 @@
         .header-section {
             background: rgba(30, 27, 75, 0.3);
             border-bottom: 1px solid var(--border-color);
-            padding: 1rem 1.5rem;
+            padding: 1rem 1.25rem;
             text-align: center;
             position: relative;
         }
 
         .header-title {
-            font-size: 1.5rem;
+            font-size: 1.45rem;
             font-weight: 800;
             letter-spacing: 0.5px;
             color: #ffffff;
@@ -85,10 +94,11 @@
             background: rgba(10, 12, 22, 0.6);
             border: 1.5px solid rgba(99, 102, 241, 0.25);
             border-radius: 6px;
-            padding: 0.4rem 0.6rem;
+            padding: 0.5rem 0.65rem;
             color: #f8fafc;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             transition: all 0.25s ease;
+            min-width: 0;
         }
 
         .form-control::placeholder {
@@ -100,11 +110,11 @@
             border-color: var(--accent-secondary);
             box-shadow: 0 0 0 0.15rem rgba(139, 92, 246, 0.25);
             color: #ffffff;
-            transform: translateY(-1px);
         }
 
         .input-group {
             position: relative;
+            flex-wrap: nowrap;
         }
 
         .input-group-text {
@@ -115,14 +125,18 @@
             color: var(--accent-primary);
         }
 
-        .form-control:not(:last-child) {
+        .input-group > .form-control {
             border-left: none;
-            border-radius: 0 6px 6px 0;
+            border-radius: 0 6px 6px 0 !important;
+        }
+
+        #passwordInput {
+            padding-right: 2.6rem;
         }
 
         .password-toggle {
             position: absolute;
-            right: 10px;
+            right: 8px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
@@ -131,6 +145,7 @@
             cursor: pointer;
             transition: color 0.2s ease;
             z-index: 10;
+            padding: 0.35rem;
         }
 
         .password-toggle:hover {
@@ -140,7 +155,7 @@
         .strength-indicator {
             height: 3px;
             border-radius: 2px;
-            margin-top: 4px;
+            margin-top: 6px;
             overflow: hidden;
             background-color: rgba(255, 255, 255, 0.05);
         }
@@ -160,7 +175,7 @@
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             border: none;
             border-radius: 6px;
-            padding: 0.45rem;
+            padding: 0.55rem 0.75rem;
             font-weight: 600;
             font-size: 0.85rem;
             color: white;
@@ -178,7 +193,7 @@
             background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
             border: none;
             border-radius: 6px;
-            padding: 0.6rem;
+            padding: 0.7rem;
             font-weight: 700;
             font-size: 0.9rem;
             color: white;
@@ -198,7 +213,7 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 6px;
-            padding: 0.6rem;
+            padding: 0.7rem;
             font-weight: 600;
             font-size: 0.9rem;
             color: #cbd5e1;
@@ -213,13 +228,12 @@
             background: rgba(239, 68, 68, 0.15);
             border-color: rgba(239, 68, 68, 0.3);
             color: #f87171;
-            transform: translateY(-1px);
         }
 
         .password-preview {
             background: rgba(13, 16, 33, 0.7);
             border-radius: 6px;
-            padding: 0.5rem 0.75rem;
+            padding: 0.6rem 0.75rem;
             border: 1px solid var(--border-color);
         }
 
@@ -234,8 +248,9 @@
 
         .preview-value {
             font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: #94a3b8;
+            overflow-wrap: anywhere;
             word-break: break-all;
         }
 
@@ -245,7 +260,7 @@
             margin-top: 0.5rem;
         }
 
-        .button-group .btn,
+        .button-group .update-btn,
         .button-group .cancel-btn {
             flex: 1;
         }
@@ -253,7 +268,7 @@
         .alert {
             border-radius: 8px;
             border: none;
-            padding: 0.6rem 1.25rem;
+            padding: 0.6rem 1rem;
             margin-bottom: 0.75rem;
             font-size: 0.85rem;
             animation: slideIn 0.3s ease;
@@ -286,16 +301,33 @@
             from { opacity: 0; transform: scale(0.97); }
             to { opacity: 1; transform: scale(1); }
         }
+
+        @media (max-width: 767.98px) {
+            body {
+                align-items: flex-start;
+                padding: 0.75rem;
+            }
+            .form-section {
+                padding: 1rem;
+            }
+            .form-control {
+                font-size: 16px; /* Evita zoom automático no celular */
+                padding: 0.55rem 0.65rem;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="main-container">
         <div class="header-section">
             <div class="d-flex align-items-center justify-content-center gap-2 mb-1">
-                <i class="bi bi-pencil-square text-primary" style="font-size: 1.6rem; filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));"></i>
+                <i class="bi bi-pencil-square text-primary" style="font-size: 1.5rem; filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));"></i>
                 <h1 class="header-title m-0">Editar Acesso</h1>
             </div>
-            <p class="header-subtitle m-0">Atualize as informações do seu acesso seguro no SafeVault</p>
+            <p class="header-subtitle m-0">Atualize as informações do seu acesso seguro</p>
         </div>
 
         <div class="form-section">
@@ -333,7 +365,7 @@
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-key"></i></span>
                             <input type="password" name="password" id="passwordInput" class="form-control" value="{{ item[3] }}" required>
-                            <button type="button" class="password-toggle" onclick="togglePassword()">
+                            <button type="button" class="password-toggle" onclick="togglePassword()" aria-label="Mostrar senha">
                                 <i class="bi bi-eye" id="toggleIcon"></i>
                             </button>
                         </div>
@@ -385,11 +417,9 @@
     </div>
 
     <script>
-        // Toggle password visibility
         function togglePassword() {
             const passwordInput = document.getElementById('passwordInput');
             const toggleIcon = document.getElementById('toggleIcon');
-            
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
                 toggleIcon.className = 'bi bi-eye-slash';
@@ -399,7 +429,6 @@
             }
         }
 
-        // Generate strong password
         function generatePassword() {
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
             let password = '';
@@ -410,10 +439,8 @@
             checkPasswordStrength(password);
         }
 
-        // Check password strength
         function checkPasswordStrength(password) {
             const strengthBar = document.getElementById('strengthBar');
-            
             let strength = 0;
             if (password.length >= 8) strength++;
             if (password.length >= 12) strength++;
@@ -421,13 +448,12 @@
             if (/[a-z]/.test(password)) strength++;
             if (/[0-9]/.test(password)) strength++;
             if (/[^A-Za-z0-9]/.test(password)) strength++;
-            
+
             if (password === '') {
                 strengthBar.className = 'strength-bar';
                 strengthBar.style.width = '0%';
                 return;
             }
-            
             if (strength <= 2) {
                 strengthBar.className = 'strength-bar strength-weak';
                 strengthBar.style.width = '33%';
@@ -440,14 +466,10 @@
             }
         }
 
-        // Auto-check password strength
         document.getElementById('passwordInput').addEventListener('input', function() {
             checkPasswordStrength(this.value);
         });
 
-
-
-        // Initialize strength check on load
         document.addEventListener('DOMContentLoaded', function() {
             const password = document.getElementById('passwordInput').value;
             checkPasswordStrength(password);
