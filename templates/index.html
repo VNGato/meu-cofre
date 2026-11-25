@@ -18,14 +18,23 @@
             --card-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
         }
 
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             background: var(--bg-gradient);
             font-family: 'Outfit', sans-serif;
             color: #f8fafc;
-            height: 100vh;
+            min-height: 100dvh;
             margin: 0;
-            padding: 0;
-            overflow: hidden;
+            padding: 0.65rem;
+            overflow-y: auto;
         }
 
         .main-container {
@@ -35,9 +44,9 @@
             border: 1px solid var(--border-color);
             box-shadow: var(--card-shadow);
             overflow: hidden;
-            margin: 1vh auto;
+            margin: 0 auto;
+            width: 100%;
             max-width: 1200px;
-            height: 98vh;
             display: flex;
             flex-direction: column;
         }
@@ -45,13 +54,13 @@
         .header-section {
             background: rgba(30, 27, 75, 0.3);
             border-bottom: 1px solid var(--border-color);
-            padding: 0.8rem 1.5rem;
+            padding: 0.85rem 3.5rem;
             text-align: center;
             position: relative;
         }
 
         .header-title {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 800;
             letter-spacing: 0.5px;
             color: #ffffff;
@@ -59,15 +68,55 @@
         }
 
         .header-subtitle {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: #94a3b8;
             opacity: 0.9;
         }
 
+        .logout-btn {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #f87171;
+            padding: 0.4rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logout-btn:hover {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
         .form-section {
-            padding: 0.75rem 1.25rem;
+            padding: 0.85rem 1.25rem;
             background: rgba(15, 23, 42, 0.25);
             border-bottom: 1px solid var(--border-color);
+        }
+
+        .mobile-form-toggle {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.18) 0%, rgba(139, 92, 246, 0.18) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            color: #e2e8f0;
+            border-radius: 10px;
+            padding: 0.65rem 1rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
         }
 
         .form-label {
@@ -83,10 +132,11 @@
             background: rgba(10, 12, 22, 0.6);
             border: 1.5px solid rgba(99, 102, 241, 0.25);
             border-radius: 6px;
-            padding: 0.35rem 0.6rem;
+            padding: 0.45rem 0.65rem;
             color: #f8fafc;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             transition: all 0.25s ease;
+            min-width: 0;
         }
 
         .form-control::placeholder {
@@ -98,11 +148,11 @@
             border-color: var(--accent-secondary);
             box-shadow: 0 0 0 0.15rem rgba(139, 92, 246, 0.25);
             color: #ffffff;
-            transform: translateY(-1px);
         }
 
         .input-group {
             position: relative;
+            flex-wrap: nowrap;
         }
 
         .input-group-text {
@@ -113,14 +163,18 @@
             color: var(--accent-primary);
         }
 
-        .form-control:not(:last-child) {
+        .input-group > .form-control {
             border-left: none;
-            border-radius: 0 6px 6px 0;
+            border-radius: 0 6px 6px 0 !important;
+        }
+
+        #passwordInput {
+            padding-right: 2.6rem;
         }
 
         .password-toggle {
             position: absolute;
-            right: 10px;
+            right: 8px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
@@ -129,6 +183,7 @@
             cursor: pointer;
             transition: color 0.2s ease;
             z-index: 10;
+            padding: 0.35rem;
         }
 
         .password-toggle:hover {
@@ -158,7 +213,7 @@
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             border: none;
             border-radius: 6px;
-            padding: 0.45rem;
+            padding: 0.55rem 0.75rem;
             font-weight: 600;
             font-size: 0.85rem;
             color: white;
@@ -168,7 +223,6 @@
 
         .generate-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.45);
             filter: brightness(1.1);
         }
 
@@ -176,7 +230,7 @@
             background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
             border: none;
             border-radius: 6px;
-            padding: 0.45rem;
+            padding: 0.55rem 0.75rem;
             font-weight: 700;
             font-size: 0.85rem;
             color: white;
@@ -188,7 +242,6 @@
 
         .submit-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
             filter: brightness(1.1);
         }
 
@@ -196,80 +249,72 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            padding: 0.75rem 1.25rem 1.25rem 1.25rem;
+            padding: 0.9rem 1.25rem 1.25rem;
+            min-width: 0;
         }
 
-        .data-section h3 {
-            font-size: 1.1rem !important;
+        .data-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.65rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .data-header h3 {
+            font-size: 1.1rem;
             font-weight: 600;
             color: #ffffff;
-            margin-top: 0.25rem !important;
-            margin-bottom: 0.5rem !important;
+            margin: 0;
+        }
+
+        .search-box {
+            max-width: 260px;
+            width: 100%;
         }
 
         .table-responsive {
-            flex: 1;
-            overflow-y: auto;
             border-radius: 10px;
             border: 1px solid var(--border-color);
             background: rgba(15, 23, 42, 0.35);
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .table-responsive::-webkit-scrollbar {
-            display: none;
+            overflow-x: hidden;
         }
 
         .data-table {
             --bs-table-bg: transparent !important;
             background-color: transparent !important;
-            border-radius: 10px;
-            overflow: hidden;
             margin-bottom: 0;
             width: 100%;
         }
 
         .data-table th {
-            padding: 0.45rem 0.6rem;
+            padding: 0.55rem 0.7rem;
             font-weight: 600;
             border: none;
-            position: relative;
             background: #0f172a !important;
             background-image: linear-gradient(135deg, #0a0c16 0%, #151a30 100%) !important;
             position: sticky;
             top: 0;
             z-index: 10;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: #94a3b8;
         }
 
-        .data-table th::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: rgba(99, 102, 241, 0.25);
-        }
-
         .data-table tbody tr {
-            transition: all 0.15s ease;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.06);
+            transition: background-color 0.15s ease;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.08);
             background-color: rgba(15, 23, 42, 0.25) !important;
         }
 
         .data-table tbody tr:hover {
             background-color: rgba(99, 102, 241, 0.12) !important;
-            transform: scale(1.002);
         }
 
         .data-table td {
-            padding: 0.45rem 0.6rem;
+            padding: 0.55rem 0.7rem;
             vertical-align: middle;
             border: none;
             font-size: 0.85rem;
@@ -280,49 +325,65 @@
         .site-name {
             font-weight: 700;
             color: #f1f5f9;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
+            overflow-wrap: anywhere;
         }
 
         .username-cell {
             color: #94a3b8;
             font-size: 0.85rem;
+            overflow-wrap: anywhere;
+            word-break: break-word;
         }
 
         .password-cell-wrapper {
             display: flex;
             align-items: center;
             gap: 6px;
+            min-width: 0;
         }
 
         .password-cell {
             font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: #e2e8f0;
             background: rgba(10, 12, 22, 0.7);
-            border-radius: 4px;
-            padding: 0.25rem 0.4rem;
+            border-radius: 6px;
+            padding: 0.3rem 0.5rem;
             border: 1px solid rgba(99, 102, 241, 0.15);
+            overflow-wrap: anywhere;
+            word-break: break-all;
         }
 
-        .password-toggle-btn {
+        .icon-action-btn {
             border: 1px solid rgba(99, 102, 241, 0.25) !important;
             background: rgba(15, 23, 42, 0.6) !important;
             color: var(--accent-primary) !important;
-            padding: 0.2rem 0.4rem;
-            font-size: 0.75rem;
+            padding: 0.28rem 0.5rem;
+            font-size: 0.8rem;
+            border-radius: 6px;
+            flex-shrink: 0;
         }
 
-        .password-toggle-btn:hover {
+        .icon-action-btn:hover {
             background: var(--accent-primary) !important;
             color: white !important;
         }
 
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+        }
+
         .action-buttons .btn {
-            margin: 0 2px;
             border-radius: 6px;
-            transition: all 0.2s ease;
-            font-size: 0.75rem;
-            padding: 0.25rem 0.5rem;
+            font-size: 0.78rem;
+            padding: 0.3rem 0.55rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
         }
 
         .btn-outline-info {
@@ -334,7 +395,6 @@
         .btn-outline-info:hover {
             background: #06b6d4;
             color: white;
-            transform: translateY(-1px);
         }
 
         .btn-warning {
@@ -343,20 +403,10 @@
             color: white;
         }
 
-        .btn-warning:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-        }
-
         .btn-danger {
             background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             border: none;
             color: white;
-        }
-
-        .btn-danger:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
         }
 
         .empty-state {
@@ -365,28 +415,23 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 2rem;
+            padding: 2.5rem 1rem;
+            text-align: center;
             color: #64748b;
         }
 
         .empty-state i {
             font-size: 3rem;
-            color: rgba(99, 102, 241, 0.2);
+            color: rgba(99, 102, 241, 0.25);
             margin-bottom: 0.5rem;
         }
 
         .alert {
             border-radius: 8px;
             border: none;
-            padding: 0.6rem 1.25rem;
+            padding: 0.6rem 1rem;
             margin-bottom: 0.75rem;
             font-size: 0.85rem;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateY(-10px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
         }
 
         .alert-success {
@@ -401,57 +446,145 @@
             border-left: 4px solid #ef4444;
         }
 
-        .fade-in {
-            animation: fadeIn 0.4s ease;
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border-left: 4px solid #f59e0b;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* --- DESKTOP: painel fixo com rolagem interna na tabela --- */
+        @media (min-width: 992px) {
+            body {
+                height: 100dvh;
+                overflow: hidden;
+                padding: 1vh 1rem;
+            }
+            .main-container {
+                height: 98dvh;
+            }
+            .data-section {
+                overflow: hidden;
+            }
+            .table-responsive {
+                flex: 1;
+                overflow-y: auto;
+                scrollbar-width: none;
+            }
+            .table-responsive::-webkit-scrollbar {
+                display: none;
+            }
         }
 
-        .logout-btn {
-            position: absolute;
-            right: 1.5rem;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.25);
-            color: #f87171;
-            padding: 0.35rem 0.75rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        /* --- TABLET E DESKTOP: formulário sempre visível --- */
+        @media (min-width: 768px) {
+            #formCollapse {
+                display: block !important;
+            }
         }
 
-        .logout-btn:hover {
-            background: #ef4444;
-            color: white;
-            border-color: #ef4444;
-            box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
-        }
-
-        @media (max-width: 576px) {
+        /* --- CELULAR (< 768px): ZERO scroll lateral + tabela vira cards --- */
+        @media (max-width: 767.98px) {
+            body {
+                padding: 0.5rem;
+            }
+            .header-section {
+                padding: 0.85rem 3rem;
+            }
+            .header-title {
+                font-size: 1.3rem;
+            }
             .logout-btn span {
                 display: none;
             }
             .logout-btn {
-                padding: 0.35rem 0.5rem;
                 right: 0.75rem;
+                padding: 0.4rem 0.55rem;
+            }
+            .form-section,
+            .data-section {
+                padding: 0.85rem;
+            }
+            .form-control {
+                font-size: 16px; /* Evita zoom automático no iOS/Android */
+                padding: 0.55rem 0.65rem;
+            }
+            .search-box {
+                max-width: 100%;
+            }
+            .table-responsive {
+                border: none;
+                background: transparent;
+                overflow: visible;
+            }
+            .data-table thead {
+                display: none;
+            }
+            .data-table,
+            .data-table tbody {
+                display: block;
+                width: 100%;
+            }
+            .data-table tbody tr {
+                display: flex;
+                flex-direction: column;
+                gap: 0.6rem;
+                padding: 0.9rem;
+                margin-bottom: 0.75rem;
+                border-radius: 12px;
+                border: 1px solid var(--border-color);
+                background: rgba(15, 23, 42, 0.55) !important;
+                width: 100%;
+            }
+            .data-table td {
+                display: flex;
+                flex-direction: column;
+                gap: 0.2rem;
+                padding: 0;
+                width: 100%;
+                min-width: 0;
+            }
+            .data-table td[data-label]::before {
+                content: attr(data-label);
+                font-size: 0.7rem;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                color: #64748b;
+                font-weight: 600;
+            }
+            .site-name {
+                font-size: 1.05rem;
+            }
+            .password-cell-wrapper {
+                width: 100%;
+            }
+            .password-cell {
+                flex: 1;
+                min-width: 0;
+                padding: 0.4rem 0.55rem;
+            }
+            .icon-action-btn {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.9rem;
+            }
+            .action-buttons {
+                width: 100%;
+                margin-top: 0.25rem;
+                padding-top: 0.65rem;
+                border-top: 1px solid rgba(99, 102, 241, 0.12);
+            }
+            .action-buttons .btn {
+                flex: 1;
+                padding: 0.5rem 0.4rem;
+                font-size: 0.82rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container main-container fade-in">
+    <div class="main-container">
         <div class="header-section">
             <div class="d-flex align-items-center justify-content-center gap-2 mb-1">
-                <i class="bi bi-shield-fill text-primary" style="font-size: 1.8rem; filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));"></i>
+                <i class="bi bi-shield-fill text-primary" style="font-size: 1.6rem; filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));"></i>
                 <h1 class="header-title m-0">SafeVault</h1>
             </div>
             <p class="header-subtitle m-0">Seu cofre digital privado e criptografado</p>
@@ -465,7 +598,7 @@
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                        <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }}">
+                        <div class="alert alert-{{ 'success' if category == 'success' else 'warning' if category == 'warning' else 'danger' }}">
                             <i class="bi bi-{{ 'check-circle' if category == 'success' else 'exclamation-triangle' }} me-2"></i>
                             {{ message }}
                         </div>
@@ -473,76 +606,88 @@
                 {% endif %}
             {% endwith %}
 
-            <form action="/add" method="POST" id="accessForm">
-                <div class="row g-2">
-                    <!-- Linha 1: Inputs principais -->
-                    <div class="col-lg-3 col-md-6">
-                        <label class="form-label"><i class="bi bi-globe me-1"></i>Site / App</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
-                            <input type="text" name="site" class="form-control" placeholder="Ex: Google, Facebook" required>
-                        </div>
-                    </div>
+            <!-- Botão para abrir/fechar formulário no celular -->
+            <button type="button" class="mobile-form-toggle d-md-none" onclick="toggleMobileForm()">
+                <span><i class="bi bi-plus-circle me-2 text-primary"></i>Adicionar Novo Acesso</span>
+                <i class="bi bi-chevron-down" id="mobileFormIcon"></i>
+            </button>
 
-                    <div class="col-lg-3 col-md-6">
-                        <label class="form-label"><i class="bi bi-person me-1"></i>Usuário / E-mail</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                            <input type="text" name="username" class="form-control" placeholder="Ex: usuario@email.com" required>
+            <div id="formCollapse" style="display: {{ 'none' if data else 'block' }};" class="mt-2 mt-md-0">
+                <form action="/add" method="POST" id="accessForm">
+                    <div class="row g-2">
+                        <div class="col-lg-3 col-md-6">
+                            <label class="form-label"><i class="bi bi-globe me-1"></i>Site / App</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                                <input type="text" name="site" class="form-control" placeholder="Ex: Google, Nubank" required>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-lg-3 col-md-6">
-                        <label class="form-label"><i class="bi bi-lock me-1"></i>Senha</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-key"></i></span>
-                            <input type="password" name="password" id="passwordInput" class="form-control" placeholder="Sua senha" required>
-                            <button type="button" class="password-toggle" onclick="togglePassword()">
-                                <i class="bi bi-eye" id="toggleIcon"></i>
+                        <div class="col-lg-3 col-md-6">
+                            <label class="form-label"><i class="bi bi-person me-1"></i>Usuário / E-mail</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input type="text" name="username" class="form-control" placeholder="Ex: usuario@email.com" required>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+                            <label class="form-label"><i class="bi bi-lock me-1"></i>Senha</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-key"></i></span>
+                                <input type="password" name="password" id="passwordInput" class="form-control" placeholder="Sua senha" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword()" aria-label="Mostrar senha">
+                                    <i class="bi bi-eye" id="toggleIcon"></i>
+                                </button>
+                            </div>
+                            <div class="strength-indicator">
+                                <div id="strengthBar" class="strength-bar"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+                            <label class="form-label"><i class="bi bi-box-arrow-up-right me-1"></i>URL (opcional)</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-link"></i></span>
+                                <input type="text" name="url" class="form-control" placeholder="https://site.com/login">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-7 col-md-6">
+                            <label class="form-label"><i class="bi bi-journal-text me-1"></i>Notas Adicionais (opcional)</label>
+                            <textarea name="notes" class="form-control" rows="2" placeholder="Digite detalhes importantes aqui..."></textarea>
+                        </div>
+
+                        <div class="col-lg-2 col-md-3 col-6 d-flex flex-column justify-content-end">
+                            <label class="form-label d-none d-md-block">&nbsp;</label>
+                            <button type="button" class="generate-btn w-100" onclick="generatePassword()">
+                                <i class="bi bi-shuffle me-1"></i>Gerar
                             </button>
                         </div>
-                        <div class="strength-indicator">
-                            <div id="strengthBar" class="strength-bar"></div>
+
+                        <div class="col-lg-3 col-md-3 col-6 d-flex flex-column justify-content-end">
+                            <label class="form-label d-none d-md-block">&nbsp;</label>
+                            <button type="submit" class="submit-btn w-100">
+                                <i class="bi bi-shield-lock me-1"></i>SALVAR
+                            </button>
                         </div>
                     </div>
-
-                    <div class="col-lg-3 col-md-6">
-                        <label class="form-label"><i class="bi bi-box-arrow-up-right me-1"></i>URL (opcional)</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-link"></i></span>
-                            <input type="text" name="url" class="form-control" placeholder="https://site.com/login">
-                        </div>
-                    </div>
-
-                    <!-- Linha 2: Notas e Ações -->
-                    <div class="col-lg-7 col-md-6">
-                        <label class="form-label"><i class="bi bi-journal-text me-1"></i>Notas Adicionais (opcional)</label>
-                        <textarea name="notes" class="form-control" rows="2" placeholder="Digite detalhes importantes aqui..."></textarea>
-                    </div>
-
-                    <div class="col-lg-2 col-md-3 d-flex flex-column justify-content-end pb-1">
-                        <label class="form-label d-none d-md-block">&nbsp;</label>
-                        <button type="button" class="generate-btn w-100" onclick="generatePassword()">
-                            <i class="bi bi-shuffle me-1"></i>Gerar Senha
-                        </button>
-                    </div>
-
-                    <div class="col-lg-3 col-md-3 d-flex flex-column justify-content-end pb-1">
-                        <label class="form-label d-none d-md-block">&nbsp;</label>
-                        <button type="submit" class="submit-btn w-100">
-                            <i class="bi bi-shield-lock me-1"></i>PROTEGER AGORA
-                        </button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
 
         {% if data %}
         <div class="data-section">
-            <h3 class="d-flex align-items-center justify-content-between mb-3">
-                <span><i class="bi bi-collection me-2 text-primary"></i>Acessos Salvos</span>
-                <span class="badge bg-primary px-3 py-2" style="font-size: 0.8rem; font-weight: 600;">{{ data|length }} registros</span>
-            </h3>
+            <div class="data-header">
+                <div class="d-flex align-items-center gap-2">
+                    <h3><i class="bi bi-collection me-2 text-primary"></i>Acessos Salvos</h3>
+                    <span class="badge bg-primary px-2 py-1" style="font-size: 0.78rem;">{{ data|length }}</span>
+                </div>
+                <div class="input-group search-box">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input type="text" id="searchInput" class="form-control" placeholder="Buscar site ou usuário...">
+                </div>
+            </div>
 
             <div class="table-responsive">
                 <table class="table data-table">
@@ -554,29 +699,35 @@
                             <th class="text-center">Ações</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="vaultList">
                         {% for item in data %}
-                        <tr class="fade-in">
+                        <tr class="vault-item" data-search="{{ item[1]|lower }} {{ item[2]|lower }}">
                             <td><span class="site-name">{{ item[1] }}</span></td>
-                            <td><span class="username-cell">{{ item[2] }}</span></td>
-                            <td>
+                            <td data-label="Usuário"><span class="username-cell">{{ item[2] }}</span></td>
+                            <td data-label="Senha">
                                 <div class="password-cell-wrapper">
                                     <code class="password-cell masked-password" id="pass-{{ item[0] }}">••••••••••••</code>
-                                    <button class="btn btn-sm password-toggle-btn rounded" onclick="togglePasswordVisibility('{{ item[0] }}', '{{ item[3] }}')" title="Mostrar/Ocultar senha">
+                                    <button type="button" class="btn icon-action-btn" data-id="{{ item[0] }}" data-password="{{ item[3] }}" onclick="togglePasswordVisibility(this)" title="Mostrar/Ocultar senha">
                                         <i class="bi bi-eye" id="icon-{{ item[0] }}"></i>
+                                    </button>
+                                    <button type="button" class="btn icon-action-btn" data-password="{{ item[3] }}" onclick="copyPassword(this)" title="Copiar senha">
+                                        <i class="bi bi-clipboard"></i>
                                     </button>
                                 </div>
                             </td>
                             <td>
-                                <div class="action-buttons d-flex justify-content-center">
-                                    <a href="{{ item[4] }}" target="_blank" class="btn btn-outline-info" title="Abrir site">
-                                        <i class="bi bi-box-arrow-up-right me-1"></i>Abrir
+                                <div class="action-buttons">
+                                    {% if item[4] %}
+                                    {% set link_url = item[4] if item[4].startswith(('http://', 'https://')) else 'https://' + item[4] %}
+                                    <a href="{{ link_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-info" title="Abrir site">
+                                        <i class="bi bi-box-arrow-up-right"></i>Abrir
                                     </a>
+                                    {% endif %}
                                     <a href="/edit/{{ item[0] }}" class="btn btn-warning" title="Editar">
-                                        <i class="bi bi-pencil me-1"></i>Editar
+                                        <i class="bi bi-pencil"></i>Editar
                                     </a>
                                     <a href="/delete/{{ item[0] }}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este acesso?')" title="Excluir">
-                                        <i class="bi bi-trash me-1"></i>Excluir
+                                        <i class="bi bi-trash"></i>Excluir
                                     </a>
                                 </div>
                             </td>
@@ -596,11 +747,21 @@
     </div>
 
     <script>
-        // Toggle password visibility in form
+        function toggleMobileForm() {
+            const formCollapse = document.getElementById('formCollapse');
+            const icon = document.getElementById('mobileFormIcon');
+            if (formCollapse.style.display === 'none') {
+                formCollapse.style.display = 'block';
+                icon.className = 'bi bi-chevron-up';
+            } else {
+                formCollapse.style.display = 'none';
+                icon.className = 'bi bi-chevron-down';
+            }
+        }
+
         function togglePassword() {
             const passwordInput = document.getElementById('passwordInput');
             const toggleIcon = document.getElementById('toggleIcon');
-            
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
                 toggleIcon.className = 'bi bi-eye-slash';
@@ -610,7 +771,6 @@
             }
         }
 
-        // Generate strong password
         function generatePassword() {
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
             let password = '';
@@ -621,10 +781,8 @@
             checkPasswordStrength(password);
         }
 
-        // Check password strength
         function checkPasswordStrength(password) {
             const strengthBar = document.getElementById('strengthBar');
-            
             let strength = 0;
             if (password.length >= 8) strength++;
             if (password.length >= 12) strength++;
@@ -632,13 +790,12 @@
             if (/[a-z]/.test(password)) strength++;
             if (/[0-9]/.test(password)) strength++;
             if (/[^A-Za-z0-9]/.test(password)) strength++;
-            
+
             if (password === '') {
                 strengthBar.className = 'strength-bar';
                 strengthBar.style.width = '0%';
                 return;
             }
-            
             if (strength <= 2) {
                 strengthBar.className = 'strength-bar strength-weak';
                 strengthBar.style.width = '33%';
@@ -651,24 +808,21 @@
             }
         }
 
-        // Auto-check password strength
         document.getElementById('passwordInput').addEventListener('input', function() {
             checkPasswordStrength(this.value);
         });
 
-
-
-        // Toggle individual password visibility in table
-        function togglePasswordVisibility(itemId, actualPassword) {
+        function togglePasswordVisibility(btn) {
+            const itemId = btn.dataset.id;
+            const actualPassword = btn.dataset.password;
             const passwordCell = document.getElementById('pass-' + itemId);
             const toggleIcon = document.getElementById('icon-' + itemId);
-            
+
             if (passwordCell.classList.contains('masked-password')) {
                 passwordCell.textContent = actualPassword;
                 passwordCell.classList.remove('masked-password');
                 toggleIcon.className = 'bi bi-eye-slash';
-                
-                // Auto-hide after 10 seconds (increased from 5 for better usability)
+
                 setTimeout(() => {
                     if (!passwordCell.classList.contains('masked-password')) {
                         passwordCell.textContent = '••••••••••••';
@@ -681,6 +835,31 @@
                 passwordCell.classList.add('masked-password');
                 toggleIcon.className = 'bi bi-eye';
             }
+        }
+
+        async function copyPassword(btn) {
+            const password = btn.dataset.password;
+            const icon = btn.querySelector('i');
+            try {
+                await navigator.clipboard.writeText(password);
+                icon.className = 'bi bi-check2 text-success';
+                setTimeout(() => {
+                    icon.className = 'bi bi-clipboard';
+                }, 2000);
+            } catch (err) {
+                alert('Não foi possível copiar automaticamente. Use o botão de visualizar senha.');
+            }
+        }
+
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                const term = this.value.toLowerCase().trim();
+                document.querySelectorAll('.vault-item').forEach(row => {
+                    const text = row.dataset.search || '';
+                    row.style.display = text.includes(term) ? '' : 'none';
+                });
+            });
         }
     </script>
 </body>
